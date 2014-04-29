@@ -2,7 +2,7 @@
 " Filename: plugin/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/03/13 00:26:33.
+" Last Change: 2014/04/29 12:19:11.
 " =============================================================================
 
 if exists('g:loaded_external') && g:loaded_external
@@ -19,6 +19,10 @@ vnoremap <silent> <Plug>(external-editor) :call external#editor()<CR>
 inoremap <silent> <Plug>(external-explorer) <ESC>:call external#explorer()<CR>
 nnoremap <silent> <Plug>(external-explorer) :call external#explorer()<CR>
 vnoremap <silent> <Plug>(external-explorer) :call external#explorer()<CR>
+
+inoremap <silent> <Plug>(external-browser) <ESC>:call external#browser('i')<CR>
+nnoremap <silent> <Plug>(external-browser) :call external#browser('n')<CR>
+vnoremap <silent> <Plug>(external-browser) :call external#browser('v')<CR>
 
 let g:loaded_external = 1
 
