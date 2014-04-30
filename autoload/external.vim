@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/04/30 07:23:27.
+" Last Change: 2014/04/30 17:16:26.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -46,13 +46,8 @@ function! external#explorer()
 endfunction
 
 function! external#browser(mode)
-  if a:mode ==# 'n'
-    let url = s:get_url_on_cursor()
-    let url = url !=# '' ? url : expand('<cword>')
-    let text = url
-  else
-    let text = s:get_selected_text()
-  endif
+  let text = a:mode ==# 'n' ? s:get_url() : s:get_text()
+  let text = text !=# '' ? text : expand('<cword>')
   if text !~ '^\%(https\?\|ftp\|git\):\/\/'
     let text = 'http://google.com/search?q=' . substitute(text, '\n$', '', '')
   endif
@@ -77,7 +72,7 @@ let s:re_url =
       \.'\%({\%([&:#*@~%_\-=?/.0-9A-Za-z]*\|{[&:#*@~%_\-=?/.0-9A-Za-z]*}\)}\)\?'
       \.'\%(\[[&:#*@~%_\-=?/.0-9A-Za-z]*\]\)\?'
       \.'\)*[/0-9A-Za-z]*\%(:\d\d*\/\?\)\?'
-function! s:get_url_on_cursor() "{{{
+function! s:get_url() "{{{
   let line = getline('.')
   let col = col('.')
   if line[col-1] !~# '\S'
@@ -85,7 +80,7 @@ function! s:get_url_on_cursor() "{{{
   endif
   let left = col <=# 1 ? '' : line[: col-2]
   let right = line[col-1 :]
-  let nonspstr = matchstr(left, '\S\+$').matchstr(right, '^\S\+')
+  let nonspstr = matchstr(left, '\S\+$') . matchstr(right, '^\S\+')
   let url = matchstr(nonspstr, s:re_url)
   if url =~ '^ttp:\/\/'
     let url = 'h' . url
@@ -95,7 +90,7 @@ function! s:get_url_on_cursor() "{{{
   return url
 endfunction
 
-function! s:get_selected_text()
+function! s:get_text()
   let save_z = getreg('z', 1)
   let save_z_type = getregtype('z')
   try
