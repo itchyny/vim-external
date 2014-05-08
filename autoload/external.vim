@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/05/08 16:16:55.
+" Last Change: 2014/05/09 00:22:42.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -52,7 +52,8 @@ function! external#explorer()
 endfunction
 
 function! external#browser(...)
-  let text = get(a:000, 0, 'n') ==# 'n' ? s:get_url() : substitute(s:get_text(), '\n\+$', '', '')
+  let text = get(a:000, 0, 'n') ==# 'n' ? s:get_url() :
+        \ substitute(substitute(s:get_text(), '[\n\r]\+', ' ', 'g'), '^\s*\|\s*$', '', 'g')
   let text = text !=# '' ? text : expand('<cword>')
   if text == ''
     return
