@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/05/09 00:22:42.
+" Last Change: 2014/05/09 00:36:09.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -82,7 +82,7 @@ let s:re_url =
       \.'\%({\%([&:#*@~%_\-=?/.0-9A-Za-z]*\|{[&:#*@~%_\-=?/.0-9A-Za-z]*}\)}\)\?'
       \.'\%(\[[&:#*@~%_\-=?/.0-9A-Za-z]*\]\)\?'
       \.'\)*[/0-9A-Za-z]*\%(:\d\d*\/\?\)\?'
-function! s:get_url() "{{{
+function! s:get_url()
   let line = getline('.')
   let col = col('.')
   let left = col <=# 1 ? '' : line[: col-2]
