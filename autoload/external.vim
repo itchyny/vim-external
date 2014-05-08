@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/04/30 17:16:26.
+" Last Change: 2014/05/08 13:13:37.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -75,13 +75,11 @@ let s:re_url =
 function! s:get_url() "{{{
   let line = getline('.')
   let col = col('.')
-  if line[col-1] !~# '\S'
-    return ''
-  endif
   let left = col <=# 1 ? '' : line[: col-2]
   let right = line[col-1 :]
-  let nonspstr = matchstr(left, '\S\+$') . matchstr(right, '^\S\+')
-  let url = matchstr(nonspstr, s:re_url)
+  let re = '[-(){}[\]&:#*@~%_\-=?/.0-9A-Za-z]\+'
+  let str = matchstr(left, re . '$') . matchstr(right, '^[- \\\t#()[\]{}<>":;,+=*/@]*' . re)
+  let url = matchstr(str, s:re_url)
   if url =~ '^ttp:\/\/'
     let url = 'h' . url
   elseif url =~ '^git@github.com:'
