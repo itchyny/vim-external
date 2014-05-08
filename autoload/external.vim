@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/05/08 15:56:06.
+" Last Change: 2014/05/08 16:16:55.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -26,7 +26,7 @@ function! external#editor()
     let cmd = ''
   endif
   if cmd !=# ''
-    silent! call system(cmd . fnameescape(expand('%:p')) . s:bg)
+    silent! call system(cmd . shellescape(expand('%:p')) . s:bg)
   endif
 endfunction
 
@@ -37,7 +37,7 @@ function! external#explorer()
   if s:ismac
     let cmd = 'open -a Finder '
     if isdirectory(path) && filereadable(file)
-      let select = ' -R ' . fnameescape(file)
+      let select = ' -R ' . shellescape(file)
     endif
   elseif s:iswin
     let cmd = 'start '
@@ -47,7 +47,7 @@ function! external#explorer()
     let cmd = ''
   endif
   if cmd !=# ''
-    silent! call system(cmd  . (select == '' ? fnameescape(path) : select) . s:bg)
+    silent! call system(cmd  . (select == '' ? shellescape(path) : select) . s:bg)
   endif
 endfunction
 
@@ -61,16 +61,16 @@ function! external#browser(...)
     let text = 'http://google.com/search?q=' . text
   endif
   if s:ismac
-    let cmd = 'open ''' . text . ''''
+    let cmd = 'open '
   elseif s:iswin
-    let cmd = 'cmd /c start "" "' . text . '"'
+    let cmd = 'cmd /c start "" '
   elseif s:xdgopen
-    let cmd = 'xdg-open ''' . text . ''''
+    let cmd = 'xdg-open '
   else
     let cmd = ''
   endif
   if cmd !=# ''
-    silent! call system(cmd . s:bg)
+    silent! call system(cmd . shellescape(text) . s:bg)
   endif
 endfunction
 
@@ -97,6 +97,7 @@ function! s:get_url() "{{{
   return url
 endfunction
 
+" The following function was copied from vital.vim, which is NYSL (almost public domain).
 function! s:get_text()
   let save_z = getreg('z', 1)
   let save_z_type = getregtype('z')
