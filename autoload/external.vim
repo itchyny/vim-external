@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/05/09 00:36:09.
+" Last Change: 2014/05/09 09:17:37.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -15,7 +15,8 @@ let s:nautilus = executable('nautilus')
 let s:xdgopen = executable('xdg-open')
 let s:bg = s:iswin ? '' : ' &'
 
-function! external#editor()
+function! external#editor(...)
+  let file = fnamemodify(a:0 ? a:1 : expand('%'), ':p')
   if s:ismac
     let cmd = 'open -a TextEdit '
   elseif s:iswin
@@ -26,13 +27,13 @@ function! external#editor()
     let cmd = ''
   endif
   if cmd !=# ''
-    silent! call system(cmd . shellescape(expand('%:p')) . s:bg)
+    silent! call system(cmd . shellescape(file) . s:bg)
   endif
 endfunction
 
-function! external#explorer()
-  let path = expand('%:p:h')
-  let file = expand('%:p')
+function! external#explorer(...)
+  let file = fnamemodify(a:0 ? a:1 : expand('%'), ':p')
+  let path = fnamemodify(file, ':h')
   let select = ''
   if s:ismac
     let cmd = 'open -a Finder '
@@ -52,9 +53,7 @@ function! external#explorer()
 endfunction
 
 function! external#browser(...)
-  let text = get(a:000, 0, 'n') ==# 'n' ? s:get_url() :
-        \ substitute(substitute(s:get_text(), '[\n\r]\+', ' ', 'g'), '^\s*\|\s*$', '', 'g')
-  let text = text !=# '' ? text : expand('<cword>')
+  let text = a:0 ? a:1 : external#get_text()
   if text == ''
     return
   endif
@@ -73,6 +72,16 @@ function! external#browser(...)
   if cmd !=# ''
     silent! call system(cmd . shellescape(text) . s:bg)
   endif
+endfunction
+
+function! external#get_text(...)
+  if get(a:000, 0, 'n') ==# 'v'
+    let text = substitute(substitute(s:get_text(), '[\n\r]\+', ' ', 'g'), '^\s*\|\s*$', '', 'g')
+  else
+    let text = s:get_url()
+  endif
+  let text = text !=# '' ? text : expand('<cword>')
+  return text
 endfunction
 
 let s:re_url =
