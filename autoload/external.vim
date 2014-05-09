@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/05/09 13:15:34.
+" Last Change: 2014/05/09 13:41:12.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -15,43 +15,28 @@ let s:nautilus = executable('nautilus')
 let s:xdgopen = executable('xdg-open')
 let s:bg = s:iswin ? '' : ' &'
 
+let s:editor = s:ismac ? 'open -a TextEdit ' : s:iswin ?  'notepad ' : s:gedit ?  'gedit ' : ''
 function! external#editor(...)
   let file = fnamemodify(a:0 ? a:1 : expand('%'), ':p')
-  if s:ismac
-    let cmd = 'open -a TextEdit '
-  elseif s:iswin
-    let cmd = 'notepad '
-  elseif s:gedit
-    let cmd = 'gedit '
-  else
-    let cmd = ''
-  endif
-  if cmd !=# ''
-    silent! call system(cmd . shellescape(file) . s:bg)
+  if s:editor !=# ''
+    silent! call system(s:editor . shellescape(file) . s:bg)
   endif
 endfunction
 
+let s:explorer = s:ismac ? 'open -a Finder ' : s:iswin ?  'start ' : s:nautilus ?  'nautilus ' : ''
 function! external#explorer(...)
   let file = fnamemodify(a:0 ? a:1 : expand('%'), ':p')
   let path = fnamemodify(file, ':h')
   let select = ''
-  if s:ismac
-    let cmd = 'open -a Finder '
-    if isdirectory(path) && filereadable(file)
-      let select = ' -R ' . shellescape(file)
-    endif
-  elseif s:iswin
-    let cmd = 'start '
-  elseif s:nautilus
-    let cmd = 'nautilus '
-  else
-    let cmd = ''
+  if s:ismac && isdirectory(path) && filereadable(file)
+    let select = ' -R ' . shellescape(file)
   endif
-  if cmd !=# ''
-    silent! call system(cmd  . (select == '' ? shellescape(path) : select) . s:bg)
+  if s:explorer !=# ''
+    silent! call system(s:explorer  . (select == '' ? shellescape(path) : select) . s:bg)
   endif
 endfunction
 
+let s:browser = s:ismac ? 'open ' : s:iswin ?  'cmd /c start "" ' : s:xdgopen ?  'xdg-open ' : ''
 function! external#browser(...)
   let text = a:0 ? a:1 : external#get_text()
   if text == ''
@@ -60,17 +45,8 @@ function! external#browser(...)
   if text !~ '^\%(https\?\|ftp\|git\):\/\/'
     let text = 'http://google.com/search?q=' . text
   endif
-  if s:ismac
-    let cmd = 'open '
-  elseif s:iswin
-    let cmd = 'cmd /c start "" '
-  elseif s:xdgopen
-    let cmd = 'xdg-open '
-  else
-    let cmd = ''
-  endif
-  if cmd !=# ''
-    silent! call system(cmd . shellescape(text) . s:bg)
+  if s:browser !=# ''
+    silent! call system(s:browser . shellescape(text) . s:bg)
   endif
 endfunction
 
