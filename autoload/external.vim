@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/05/10 11:16:16.
+" Last Change: 2014/05/10 11:30:17.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -29,12 +29,7 @@ function! external#explorer(...)
   let path = fnamemodify(file, ':h')
   let select = ''
   if isdirectory(path) && filereadable(file)
-    if s:ismac
-      let select = ' -R ' . shellescape(file)
-    elseif s:iswin
-    else
-      let select = shellescape(file)
-    endif
+    let select = s:ismac ? ' -R ' . shellescape(file) : s:iswin ? '' : shellescape(file)
   endif
   if s:explorer !=# ''
     silent! call system(s:explorer  . (select == '' ? shellescape(path) : select) . s:bg)
