@@ -1,0 +1,74 @@
+*external.txt*	Switch to external applications from Vim
+
+Version: 0.0
+Author: itchyny (https://github.com/itchyny)
+License: MIT License
+Repository: https://github.com/itchyny/vim-external
+Last Change: 2014/05/10 10:04:49.
+
+CONTENTS					*external-contents*
+
+Introduction				|external-introduction|
+Mapping					|external-mapping|
+Function				|external-function|
+Example					|external-example|
+Changelog				|external-changelog|
+
+==============================================================================
+INTRODUCTION					*external-introduction*
+
+The *external* ( *external.vim* *vim-external* )  helps you switch to external
+applications from Vim.
+
+==============================================================================
+MAPPING						*external-mapping*
+Mappings of |external|.
+
+	<Plug>(external-editor)			*<Plug>(external-editor)*
+		Opens the current file with the external editor.
+
+	<Plug>(external-explorer)		*<Plug>(external-explorer)*
+		Opens the external explorer at the directory where the current
+		buffer file exists.
+
+	<Plug>(external-browser)		*<Plug>(external-browser)*
+		Opens the external browser with the searching word or the url
+		under the cursor.
+
+==============================================================================
+FUNCTION					*external-function*
+Exposed functions of |external|.
+
+	external#editor([{file}])		*external#editor()*
+		Opens the file with the external editor.
+		If the argument is ommited, it opens the current file.
+
+	external#explorer([{file,directory}])	*external#explorer()*
+		Opens the external explorer at the directory where the {file}
+		exists. You can also specify a {directory}.
+		If the argument is ommited, it opens the directory where the
+		current file exists.
+
+	external#browser([{word,url}])		*external#browser()*
+		Opens the external browser. If the argument is a {word}, it
+		googles the word. If the argument is a {url}, it opens the
+		site.
+		If the argument is ommited, it opens with the word or url
+		under the cursor.
+
+==============================================================================
+EXAMPLE						*external-example*
+An example of using the mappings of |external|.
+>
+	map <Leader>e <Plug>(external-editor)
+	map <Leader>n <Plug>(external-explorer)
+	map <Leader>b <Plug>(external-browser)
+<
+==============================================================================
+CHANGELOG					*external-changelog*
+
+0.0	2014-03-13, ...
+	- Initial commit
+
+==============================================================================
+vim:tw=78:sw=4:ts=8:ft=help:norl:noet:
