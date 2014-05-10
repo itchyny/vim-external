@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/05/10 11:30:17.
+" Last Change: 2014/05/10 12:46:07.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -61,7 +61,7 @@ function! external#get_text(...)
 endfunction
 
 let s:re_url =
-      \'\%(\%(h\?ttps\?\|ftp\|git\):\/\/\|git@github.com:\)\%('
+      \'\%(\%(h\?ttps\?\|ftp\):\/\/\|git@github.com:\)\%('
       \.'[&:#*@~%_\-=?/.0-9A-Za-z]*'
       \.'\%(([&:#*@~%_\-=?/.0-9A-Za-z]*)\)\?'
       \.'\%({\%([&:#*@~%_\-=?/.0-9A-Za-z]*\|{[&:#*@~%_\-=?/.0-9A-Za-z]*}\)}\)\?'
