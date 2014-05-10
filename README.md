@@ -1,4 +1,4 @@
-# Switch to external applications from Vim
+# Switch to external applications
 You can open
 
 * the external editor with `<Plug>(external-editor)`.
