@@ -18,7 +18,7 @@ let s:bg = s:iswin ? '' : ' &'
 let s:editor = s:ismac ? 'open -a TextEdit ' : s:iswin ?  'notepad ' : s:gedit ?  'gedit ' : ''
 function! external#editor(...)
   let file = fnamemodify(a:0 ? a:1 : expand('%'), ':p')
-  if s:editor !=# ''
+  if s:editor !=# '' && filereadable(file)
     silent! call system(s:editor . shellescape(file) . s:bg)
   endif
 endfunction
