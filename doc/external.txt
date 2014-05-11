@@ -4,7 +4,7 @@ Version: 0.0
 Author: itchyny (https://github.com/itchyny)
 License: MIT License
 Repository: https://github.com/itchyny/vim-external
-Last Change: 2014/05/10 10:04:49.
+Last Change: 2014/05/11 21:58:43.
 
 CONTENTS					*external-contents*
 
@@ -41,19 +41,19 @@ Exposed functions of |external|.
 
 	external#editor([{file}])		*external#editor()*
 		Opens the file with the external editor.
-		If the argument is ommited, it opens the current file.
+		If the argument is omitted, it opens the current file.
 
 	external#explorer([{file,directory}])	*external#explorer()*
 		Opens the external explorer at the directory where the {file}
 		exists. You can also specify a {directory}.
-		If the argument is ommited, it opens the directory where the
+		If the argument is omitted, it opens the directory where the
 		current file exists.
 
 	external#browser([{word,url}])		*external#browser()*
 		Opens the external browser. If the argument is a {word}, it
-		googles the word. If the argument is a {url}, it opens the
-		site.
-		If the argument is ommited, it opens with the word or url
+		searches the word with Google. If the argument is a {url}, it
+		opens the site.
+		If the argument is omitted, it opens with the word or url
 		under the cursor.
 
 ==============================================================================
