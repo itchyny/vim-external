@@ -29,12 +29,12 @@ This software is released under the MIT License, see LICENSE.
 
         git clone https://github.com/itchyny/vim-external ~/.vim/bundle/vim-external
 
-### Vundle (https://github.com/gmarik/vundle)
+### Vundle (https://github.com/gmarik/Vundle.vim)
 1. Add the following configuration to your vimrc.
 
-        Bundle 'itchyny/vim-external'
+        Plugin 'itchyny/vim-external'
 
-2. Install with `:BundleInstall`.
+2. Install with `:PluginInstall`.
 
 ### NeoBundle (https://github.com/Shougo/neobundle.vim)
 1. Add the following configuration to your vimrc.
