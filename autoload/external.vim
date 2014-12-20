@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/11/21 21:04:40.
+" Last Change: 2014/12/14 16:00:40.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -42,7 +42,7 @@ function! external#browser(...)
   if text == ''
     return
   endif
-  if text !~ '^\%(https\?\|ftp\|git\):\/\/'
+  if text !~# '\m\c^\%(https\?\|ftp\|git\|file\):\/\/'
     let text = 'http://google.com/search?q=' . text
   endif
   if s:browser !=# ''
@@ -61,24 +61,24 @@ function! external#get_text(...)
 endfunction
 
 let s:re_url =
-      \'\%(\%(h\?ttps\?\|ftp\):\/\/\|git@github.com:\)\%('
-      \.'[&:#*@~%_\-=?+;/.0-9A-Za-z]*'
-      \.'\%(([&:#*@~%_\-=?+;/.0-9A-Za-z]*)\)\?'
-      \.'\%({\%([&:#*@~%_\-=?+;/.0-9A-Za-z]*\|{[&:#*@~%_\-=?+;/.0-9A-Za-z]*}\)}\)\?'
-      \.'\%(\[[&:#*@~%_\-=?+;/.0-9A-Za-z]*\]\)\?'
+      \'\m\c\%(\%(h\?ttps\?\|ftp\|file\|ssh\):\/\/\|[a-z]\+@[a-z]\+.[a-z]\+:\)\%('
+      \.'\%([&:#*@~%_\-=?!+;/.0-9A-Za-z]*\%([.,][&:#*@~%_\-=?!+;/0-9A-Za-z]\+\)\+\)\?'
+      \.'\%(([&:#*@~%_\-=?!+;/.0-9A-Za-z]*)\)\?'
+      \.'\%({\%([&:#*@~%_\-=?!+;/.0-9A-Za-z]*\|{[&:#*@~%_\-=?!+;/.0-9A-Za-z]*}\)}\)\?'
+      \.'\%(\[[&:#*@~%_\-=?!+;/.0-9A-Za-z]*\]\)\?'
       \.'\)*[/0-9A-Za-z]*\%(:\d\d*\/\?\)\?'
 function! s:get_url()
   let line = getline('.')
   let col = col('.')
   let left = col <=# 1 ? '' : line[: col-2]
   let right = line[col-1 :]
-  let re = '[-(){}[\]&:#*@~%_\-=?/.0-9A-Za-z]\+'
+  let re = '[-(){}[\]&:#*@~%_\-=?!+;/.,0-9A-Za-z]\+'
   let str = matchstr(left, re . '$') . matchstr(right, '^[- \\\t#()[\]{}<>"'':;,+=*/@%]*' . re)
-  let url = matchstr(str, s:re_url)
-  if url =~? '^ttp:\/\/'
+  let url = substitute(matchstr(str, s:re_url), '!!!$', '', '')
+  if url =~? '\m\c^ttp:\/\/'
     let url = 'h' . url
-  elseif url =~? '^git@github.com:'
-    let url = 'https://github.com/' . substitute(url, '^git@github.com:\|\.git$', '', 'g')
+  elseif url =~? '\m\c^\%(ssh:\/\/\)\?git@github.com:'
+    let url = 'https://github.com/' . substitute(url, '^\%(ssh:\/\/\)\?git@github.com:\d*\/\?\|\.git$', '', 'g')
   endif
   return url
 endfunction
