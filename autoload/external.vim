@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/12/14 16:00:40.
+" Last Change: 2014/12/21 07:50:19.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -16,7 +16,7 @@ let s:xdgopen = executable('xdg-open')
 let s:bg = s:iswin ? '' : ' &'
 
 let s:editor = s:ismac ? 'open -a TextEdit ' : s:iswin ?  'notepad ' : s:gedit ?  'gedit ' : ''
-function! external#editor(...)
+function! external#editor(...) abort
   let file = fnamemodify(a:0 ? a:1 : expand('%'), ':p')
   if s:editor !=# '' && filereadable(file)
     silent! call system(s:editor . shellescape(file) . s:bg)
@@ -24,7 +24,7 @@ function! external#editor(...)
 endfunction
 
 let s:explorer = s:ismac ? 'open -a Finder ' : s:iswin ?  'explorer ' : s:nautilus ?  'nautilus ' : ''
-function! external#explorer(...)
+function! external#explorer(...) abort
   let file = fnamemodify(a:0 ? a:1 : expand('%'), ':p')
   let path = fnamemodify(file, ':h')
   let select = ''
@@ -37,7 +37,7 @@ function! external#explorer(...)
 endfunction
 
 let s:browser = s:ismac ? 'open ' : s:iswin ?  'cmd /c start "" ' : s:xdgopen ?  'xdg-open ' : ''
-function! external#browser(...)
+function! external#browser(...) abort
   let text = a:0 ? a:1 : external#get_text()
   if text == ''
     return
@@ -50,7 +50,7 @@ function! external#browser(...)
   endif
 endfunction
 
-function! external#get_text(...)
+function! external#get_text(...) abort
   if get(a:000, 0, 'n') ==# 'v'
     let text = substitute(substitute(s:get_text(), '[\n\r]\+', ' ', 'g'), '^\s*\|\s*$', '', 'g')
   else
@@ -67,7 +67,7 @@ let s:re_url =
       \.'\%({\%([&:#*@~%_\-=?!+;/.0-9A-Za-z]*\|{[&:#*@~%_\-=?!+;/.0-9A-Za-z]*}\)}\)\?'
       \.'\%(\[[&:#*@~%_\-=?!+;/.0-9A-Za-z]*\]\)\?'
       \.'\)*[/0-9A-Za-z]*\%(:\d\d*\/\?\)\?'
-function! s:get_url()
+function! s:get_url() abort
   let line = getline('.')
   let col = col('.')
   let left = col <=# 1 ? '' : line[: col-2]
@@ -84,7 +84,7 @@ function! s:get_url()
 endfunction
 
 " The following function was copied from vital.vim, which is NYSL (almost public domain).
-function! s:get_text()
+function! s:get_text() abort
   let save_z = getreg('z', 1)
   let save_z_type = getregtype('z')
   try
