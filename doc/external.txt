@@ -4,13 +4,14 @@ Version: 0.0
 Author: itchyny (https://github.com/itchyny)
 License: MIT License
 Repository: https://github.com/itchyny/vim-external
-Last Change: 2014/05/11 21:58:43.
+Last Change: 2015/01/11 01:24:39.
 
 CONTENTS					*external-contents*
 
 Introduction				|external-introduction|
 Mapping					|external-mapping|
 Function				|external-function|
+Options					|external-options|
 Example					|external-example|
 Changelog				|external-changelog|
 
@@ -20,7 +21,7 @@ INTRODUCTION					*external-introduction*
 The *external* ( *external.vim* *vim-external* )  helps you switch to external
 applications from Vim.
 
-==============================================================================
+------------------------------------------------------------------------------
 MAPPING						*external-mapping*
 Mappings of |external|.
 
@@ -35,7 +36,7 @@ Mappings of |external|.
 		Opens the external browser with the searching word or the url
 		under the cursor.
 
-==============================================================================
+------------------------------------------------------------------------------
 FUNCTION					*external-function*
 Exposed functions of |external|.
 
@@ -56,7 +57,16 @@ Exposed functions of |external|.
 		If the argument is omitted, it opens with the word or url
 		under the cursor.
 
-==============================================================================
+------------------------------------------------------------------------------
+OPTIONS						*external-options*
+
+g:external_url_pattern				*g:external_url_pattern*
+	You can configure the URL pattern with this variable. Set a regular
+	expression to this variable.
+	The default value is complicated. You can see the value by
+	|external#url_pattern()|.
+
+------------------------------------------------------------------------------
 EXAMPLE						*external-example*
 An example of using the mappings of |external|.
 >
