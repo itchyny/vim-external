@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2014/12/24 20:15:08.
+" Last Change: 2015/01/10 19:09:32.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -60,13 +60,15 @@ function! external#get_text(...) abort
   return text
 endfunction
 
-let s:re_url =
-      \'\m\c\%(\%(h\?ttps\?\|ftp\|file\|ssh\|git\):\/\/\|[a-z]\+@[a-z]\+.[a-z]\+:\)\%('
-      \.'\%([&:#*@~%_\-=?!+;/.0-9A-Za-z]*\%([.,][&:#*@~%_\-=?!+;/0-9A-Za-z]\+\)\+\)\?'
-      \.'\%(([&:#*@~%_\-=?!+;/.0-9A-Za-z]*)\)\?'
-      \.'\%({\%([&:#*@~%_\-=?!+;/.0-9A-Za-z]*\|{[&:#*@~%_\-=?!+;/.0-9A-Za-z]*}\)}\)\?'
-      \.'\%(\[[&:#*@~%_\-=?!+;/.0-9A-Za-z]*\]\)\?'
-      \.'\)*[/0-9A-Za-z]*\%(:\d\d*\/\?\)\?'
+function! external#url_pattern() abort
+  return  '\m\c\%(\%(h\?ttps\?\|ftp\|file\|ssh\|git\):\/\/\|[a-z]\+@[a-z]\+.[a-z]\+:\)\%('
+        \.'\%([&:#*@~%_\-=?!+;/.0-9A-Za-z]*\%([.,][&:#*@~%_\-=?!+;/0-9A-Za-z]\+\)\+\)\?'
+        \.'\%(([&:#*@~%_\-=?!+;/.0-9A-Za-z]*)\)\?'
+        \.'\%({\%([&:#*@~%_\-=?!+;/.0-9A-Za-z]*\|{[&:#*@~%_\-=?!+;/.0-9A-Za-z]*}\)}\)\?'
+        \.'\%(\[[&:#*@~%_\-=?!+;/.0-9A-Za-z]*\]\)\?'
+        \.'\)*[/0-9A-Za-z]*\%(:\d\d*\/\?\)\?'
+endfunction
+
 function! s:get_url() abort
   let line = getline('.')
   let col = col('.')
@@ -74,7 +76,8 @@ function! s:get_url() abort
   let right = line[col-1 :]
   let re = '[-(){}[\]&:#*@~%_\-=?!+;/.,0-9A-Za-z]\+'
   let str = matchstr(left, re . '$') . matchstr(right, '^[- \\\t#()[\]{}<>"'':;,+=*/@%]*' . re)
-  let url = substitute(matchstr(str, s:re_url), '!!!$', '', '')
+  let pattern = get(g:, 'external_url_pattern', external#url_pattern())
+  let url = substitute(matchstr(str, pattern), '!!!$', '', '')
   if url =~? '\m\c^ttp:\/\/'
     let url = 'h' . url
   elseif url =~? '\m\c^\%(ssh:\/\/\)\?git@github.com:'
