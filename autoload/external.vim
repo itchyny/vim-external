@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2015/01/10 19:09:32.
+" Last Change: 2015/01/21 01:11:58.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -66,7 +66,7 @@ function! external#url_pattern() abort
         \.'\%(([&:#*@~%_\-=?!+;/.0-9A-Za-z]*)\)\?'
         \.'\%({\%([&:#*@~%_\-=?!+;/.0-9A-Za-z]*\|{[&:#*@~%_\-=?!+;/.0-9A-Za-z]*}\)}\)\?'
         \.'\%(\[[&:#*@~%_\-=?!+;/.0-9A-Za-z]*\]\)\?'
-        \.'\)*[/0-9A-Za-z]*\%(:\d\d*\/\?\)\?'
+        \.'\)*[-/0-9A-Za-z]*\%(:\d\d*\/\?\)\?'
 endfunction
 
 function! s:get_url() abort
