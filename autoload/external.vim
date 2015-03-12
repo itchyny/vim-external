@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2015/01/21 01:11:58.
+" Last Change: 2015/02/18 10:03:00.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -32,14 +32,14 @@ function! external#explorer(...) abort
     let select = (s:ismac ? ' -R ' : s:iswin ? ' /SELECT,' : '') . shellescape(file)
   endif
   if s:explorer !=# ''
-    silent! call system(s:explorer  . (select == '' ? shellescape(path) : select) . s:bg)
+    silent! call system(s:explorer  . (select ==# '' ? shellescape(path) : select) . s:bg)
   endif
 endfunction
 
 let s:browser = s:ismac ? 'open ' : s:iswin ?  'cmd /c start "" ' : s:xdgopen ?  'xdg-open ' : ''
 function! external#browser(...) abort
   let text = a:0 ? a:1 : external#get_text()
-  if text == ''
+  if text ==# ''
     return
   endif
   if text !~# '\m\c^\%(https\?\|ftp\|git\|file\):\/\/'
