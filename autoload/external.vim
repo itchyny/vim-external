@@ -2,14 +2,14 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2015/06/21 12:06:59.
+" Last Change: 2015/10/04 00:51:06.
 " =============================================================================
 
 let s:save_cpo = &cpo
 set cpo&vim
 
 let s:iswin = has('win16') || has('win32') || has('win64')
-let s:ismac = !s:iswin && !has('win32unix') && (has('mac') || has('macunix') || has('guimacvim'))
+let s:ismac = !s:iswin && !has('win32unix') && (has('mac') || has('macunix'))
 let s:gedit = executable('gedit')
 let s:nautilus = executable('nautilus')
 let s:xdgopen = executable('xdg-open')
