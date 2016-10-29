@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2016/05/18 09:18:44.
+" Last Change: 2016/10/29 23:27:03.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -47,6 +47,13 @@ function! external#browser(...) abort
   endif
   if s:browser !=# ''
     silent! call system(s:browser . shellescape(text) . s:bg)
+  endif
+endfunction
+
+function! external#open(...) abort
+  let file = fnamemodify(a:0 ? a:1 : expand('%'), ':p')
+  if s:browser !=# '' && filereadable(file)
+    silent! call system(s:browser . shellescape(file) . s:bg)
   endif
 endfunction
 
