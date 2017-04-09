@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2017/04/09 13:41:50.
+" Last Change: 2017/04/09 13:54:12.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -92,10 +92,10 @@ function! s:get_url() abort
     endif
     let start = end_pos
   endwhile
-  if url =~? '\m\c^ttp:\/\/'
+  if url =~? '\v\c^ttps?://'
     let url = 'h' . url
-  elseif url =~? '\m\c^\%(ssh:\/\/\)\?git@github.com:'
-    let url = 'https://github.com/' . substitute(url, '^\%(ssh:\/\/\)\?git@github.com:\d*\/\?\|\.git$', '', 'g')
+  elseif url =~? '\v\c^%(ssh://)?git\@github\.com:'
+    let url = 'https://github.com/' . substitute(url, '\v\c^%(ssh://)?git\@github\.com:\d*/?|\.git$', '', 'g')
   endif
   return url
 endfunction
