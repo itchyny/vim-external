@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2017/04/09 13:54:12.
+" Last Change: 2017/04/09 15:16:01.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -81,6 +81,7 @@ function! s:get_url() abort
   let pattern = get(g:, 'external_url_pattern', external#url_pattern())
   let start = 0
   let distance = len(line)
+  let url = ''
   while 1
     let [str, start_pos, end_pos] = matchstrpos(line, pattern, start)
     let new_distance = min([abs(col - end_pos), abs(col - start_pos)])
