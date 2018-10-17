@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2018/08/19 22:36:18.
+" Last Change: 2018/10/17 22:14:40.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -43,7 +43,8 @@ function! external#browser(...) abort
     return
   endif
   if text !~# '\m\c^\%(https\?\|ftp\|git\|file\):\/\/'
-    let text = 'http://google.com/search?q=' . text
+    let engine = get(g:, 'external_search_engine', 'https://google.com/search?q=')
+    let text = engine . text
   endif
   if s:browser !=# ''
     silent! call system(s:browser . shellescape(text) . s:bg)

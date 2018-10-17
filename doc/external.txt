@@ -4,7 +4,7 @@ Version: 0.0
 Author: itchyny (https://github.com/itchyny)
 License: MIT License
 Repository: https://github.com/itchyny/vim-external
-Last Change: 2015/01/11 01:24:39.
+Last Change: 2018/10/17 22:25:51.
 
 CONTENTS					*external-contents*
 
@@ -52,8 +52,9 @@ Exposed functions of |external|.
 
 	external#browser([{word,url}])		*external#browser()*
 		Opens the external browser. If the argument is a {word}, it
-		searches the word with Google. If the argument is a {url}, it
-		opens the site.
+		searches the word with Google by default (can be customized
+		with |g:external_search_engine|). If the argument is a {url},
+		it opens the site.
 		If the argument is omitted, it opens with the word or url
 		under the cursor.
 
@@ -65,6 +66,11 @@ g:external_url_pattern				*g:external_url_pattern*
 	expression to this variable.
 	The default value is complicated. You can see the value by
 	|external#url_pattern()|.
+
+g:external_search_engine			*g:external_search_engine*
+	You can configure the search engine used in |external#browser()|. Set
+	it to a query URL where the text will be appended on its end.
+	The default value is `'https://google.com/search?q='`.
 
 ------------------------------------------------------------------------------
 EXAMPLE						*external-example*
