@@ -4,7 +4,7 @@ Version: 0.0
 Author: itchyny (https://github.com/itchyny)
 License: MIT License
 Repository: https://github.com/itchyny/vim-external
-Last Change: 2018/10/17 22:25:51.
+Last Change: 2018/10/17 22:49:00.
 
 CONTENTS					*external-contents*
 
@@ -70,7 +70,7 @@ g:external_url_pattern				*g:external_url_pattern*
 g:external_search_engine			*g:external_search_engine*
 	You can configure the search engine used in |external#browser()|. Set
 	it to a query URL where the text will be appended on its end.
-	The default value is `'https://google.com/search?q='`.
+	The default value is `'https://www.google.com/search?q='`.
 
 ------------------------------------------------------------------------------
 EXAMPLE						*external-example*
