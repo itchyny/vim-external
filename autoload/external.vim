@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2018/11/19 23:45:38.
+" Last Change: 2018/11/19 23:53:23.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -23,7 +23,7 @@ function! external#editor(...) abort
   endif
 endfunction
 
-let s:explorer = s:ismac ? 'open -a Finder ' : s:iswin ?  'explorer ' : s:nautilus ?  'nautilus ' : ''
+let s:explorer = s:ismac ? 'open -a Finder ' : s:iswin ?  'explorer ' : s:xdgopen ? 'xdg-open ' : s:nautilus ? 'nautilus ' : ''
 function! external#explorer(...) abort
   let file = fnamemodify(a:0 ? a:1 : expand('%'), ':p')
   let path = fnamemodify(file, ':h')
