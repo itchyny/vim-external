@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2018/11/19 23:53:23.
+" Last Change: 2019/05/30 23:05:47.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -69,11 +69,10 @@ function! external#get_text(...) abort
 endfunction
 
 function! external#url_pattern() abort
-  return  '\v\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+\@[a-z]+.[a-z]+:)%('
-        \.'%([&:#*@~%_\-=?!+;/.0-9A-Za-z]*%(%([.,;][&:#*@~%_\-=?!+/0-9A-Za-z]+)+|:\d+))?'
-        \.'%(\([&:#*@~%_\-=?!+;/.0-9A-Za-z]*\))?%(\[[&:#*@~%_\-=?!+/.0-9A-Za-z]*\])?'
-        \.'%(\{%([&:#*@~%_\-=?!+;/.0-9A-Za-z]*|\{[&:#*@~%_\-=?!+/.0-9A-Za-z]*\})\})?'
-        \.')*[-/0-9A-Za-z]*'
+  return  '\v\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%('
+        \.'[&:#*@~%_\-=?!+;/.0-9A-Za-z]+%([.,;/?][&:#*@~%_\-=?!+/0-9A-Za-z]+|:\d+)*|'
+        \.'\([&:#*@~%_\-=?!+;/.0-9A-Za-z]*\)|\[[&:#*@~%_\-=?!+;/.0-9A-Za-z]*\]|'
+        \.'\{%([&:#*@~%_\-=?!+;/.0-9A-Za-z]*|\{[&:#*@~%_\-=?!+;/.0-9A-Za-z]*\})\})+'
 endfunction
 
 function! s:get_url() abort
