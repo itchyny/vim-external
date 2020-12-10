@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2019/07/20 14:17:13.
+" Last Change: 2020/12/10 14:23:41.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -44,11 +44,15 @@ function! external#browser(...) abort
   endif
   if text !~# '\m\c^\%(https\?\|ftp\|git\|file\):\/\/'
     let engine = get(g:, 'external_search_engine', 'https://www.google.com/search?q=')
-    let text = engine . text
+    let text = engine . s:url_escape(text)
   endif
   if s:browser !=# ''
     silent! call system(s:browser . shellescape(text) . s:bg)
   endif
+endfunction
+
+function! s:url_escape(str) abort
+  return substitute(a:str, '[^a-zA-Z0-9_.-]', '\=printf("%%%02X", char2nr(submatch(0)))', 'g')
 endfunction
 
 function! external#open(...) abort
