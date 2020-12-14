@@ -2,7 +2,7 @@
 " Filename: autoload/external.vim
 " Author: itchyny
 " License: MIT License
-" Last Change: 2020/12/10 14:23:41.
+" Last Change: 2020/12/14 19:34:33.
 " =============================================================================
 
 let s:save_cpo = &cpo
@@ -52,7 +52,25 @@ function! external#browser(...) abort
 endfunction
 
 function! s:url_escape(str) abort
-  return substitute(a:str, '[^a-zA-Z0-9_.-]', '\=printf("%%%02X", char2nr(submatch(0)))', 'g')
+  let ret = ''
+  for i in range(len(a:str))
+    let c = a:str[i]
+    let ret .= c =~# '[0-9A-Za-z-._~!''()*]' ? c : c ==# ' ' ? '+' : '%' . s:nr2hex(char2nr(c))
+  endfor
+  return ret
+endfunction
+
+function! s:nr2hex(nr) abort
+  let n = a:nr
+  let r = ''
+  while n
+    let r = '0123456789ABCDEF'[n % 16] . r
+    let n = n / 16
+  endwhile
+  if len(r) % 2
+    let r = '0' . r
+  endif
+  return r
 endfunction
 
 function! external#open(...) abort
